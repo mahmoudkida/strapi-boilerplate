@@ -1,0 +1,42 @@
+{
+  "kind": "collectionType",
+  "collectionName": "kids_branch_visitors",
+  "info": {
+    "singularName": "kids-branch-visitor",
+    "pluralName": "kids-branch-visitors",
+    "displayName": "KidsBranchVisitor"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "gender": {
+      "type": "enumeration",
+      "enum": [
+        "male",
+        "female"
+      ],
+      "required": true
+    },
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "phone_number": {
+      "type": "string",
+      "required": true
+    },
+    "email": {
+      "type": "email"
+    },
+    "parent_phone_number": {
+      "type": "string"
+    },
+    "kids_branch_visit": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::kids-branch-visit.kids-branch-visit"
+    }
+  }
+}

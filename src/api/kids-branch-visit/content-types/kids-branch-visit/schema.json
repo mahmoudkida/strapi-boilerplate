@@ -1,0 +1,48 @@
+{
+  "kind": "collectionType",
+  "collectionName": "kids_branch_visits",
+  "info": {
+    "singularName": "kids-branch-visit",
+    "pluralName": "kids-branch-visits",
+    "displayName": "KidsBranchVisit"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "company_name": {
+      "type": "string",
+      "required": true
+    },
+    "responsible_person_name": {
+      "type": "string",
+      "required": true
+    },
+    "visit_date": {
+      "type": "date",
+      "required": true
+    },
+    "responsible_person_phone_number": {
+      "type": "string",
+      "required": true
+    },
+    "business_email": {
+      "type": "email",
+      "required": true
+    },
+    "message": {
+      "type": "text"
+    },
+    "logo": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}
