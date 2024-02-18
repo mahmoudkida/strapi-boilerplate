@@ -1,25 +1,5 @@
-'use strict';
-
 module.exports = {
-  /**
-   * An asynchronous register function that runs before
-   * your application is initialized.
-   *
-   * This gives you an opportunity to extend code.
-   */
-  register(/*{ strapi }*/) {},
-
-  /**
-   * An asynchronous bootstrap function that runs before
-   * your application gets started.
-   *
-   * This gives you an opportunity to set up your data model,
-   * run jobs, or perform some special logic.
-   */
-  bootstrap({ strapi }) {
-    // we listen to lifecycle events
-    strapi.db.lifecycles.subscribe({
-      models: ["kids-branch-visit::kids-branch-visit"], //only listen to events for this model
+    lifecycles: {
       async beforeUpdate(event) {
         const { params, data } = event;
   
@@ -41,6 +21,6 @@ module.exports = {
           }
         }
       },
-    });
-  },
-};
+    },
+  };
+  

@@ -4,7 +4,8 @@
   "info": {
     "singularName": "kids-branch-visit",
     "pluralName": "kids-branch-visits",
-    "displayName": "KidsBranchVisit"
+    "displayName": "KidsBranchVisit",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -34,15 +35,17 @@
     "message": {
       "type": "text"
     },
-    "logo": {
-      "allowedTypes": [
-        "images",
-        "files",
-        "videos",
-        "audios"
-      ],
+    "current_visit": {
+      "type": "boolean",
+      "default": false
+    },
+    "company_logo": {
       "type": "media",
-      "multiple": false
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images"
+      ]
     }
   }
 }
