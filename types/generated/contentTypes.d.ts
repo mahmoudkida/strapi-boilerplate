@@ -408,6 +408,7 @@ export interface ApiKidsBranchVisitorKidsBranchVisitor
     singularName: 'kids-branch-visitor';
     pluralName: 'kids-branch-visitors';
     displayName: 'KidsBranchVisitor';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -423,6 +424,9 @@ export interface ApiKidsBranchVisitorKidsBranchVisitor
       'oneToOne',
       'api::kids-branch-visit.kids-branch-visit'
     >;
+    team: Attribute.Enumeration<['red', 'yellow']>;
+    picture: Attribute.Media;
+    points: Attribute.Integer;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
