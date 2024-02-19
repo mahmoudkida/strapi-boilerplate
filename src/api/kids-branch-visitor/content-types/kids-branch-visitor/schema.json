@@ -4,7 +4,8 @@
   "info": {
     "singularName": "kids-branch-visitor",
     "pluralName": "kids-branch-visitors",
-    "displayName": "KidsBranchVisitor"
+    "displayName": "KidsBranchVisitor",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -37,6 +38,26 @@
       "type": "relation",
       "relation": "oneToOne",
       "target": "api::kids-branch-visit.kids-branch-visit"
+    },
+    "team": {
+      "type": "enumeration",
+      "enum": [
+        "red",
+        "yellow"
+      ]
+    },
+    "picture": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "points": {
+      "type": "integer"
     }
   }
 }
