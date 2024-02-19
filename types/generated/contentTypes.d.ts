@@ -362,6 +362,85 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiKidsBranchVisitKidsBranchVisit
+  extends Schema.CollectionType {
+  collectionName: 'kids_branch_visits';
+  info: {
+    singularName: 'kids-branch-visit';
+    pluralName: 'kids-branch-visits';
+    displayName: 'KidsBranchVisit';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    company_name: Attribute.String & Attribute.Required;
+    responsible_person_name: Attribute.String & Attribute.Required;
+    visit_date: Attribute.Date & Attribute.Required;
+    responsible_person_phone_number: Attribute.String & Attribute.Required;
+    business_email: Attribute.Email & Attribute.Required;
+    message: Attribute.Text;
+    current_visit: Attribute.Boolean & Attribute.DefaultTo<false>;
+    company_logo: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::kids-branch-visit.kids-branch-visit',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::kids-branch-visit.kids-branch-visit',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiKidsBranchVisitorKidsBranchVisitor
+  extends Schema.CollectionType {
+  collectionName: 'kids_branch_visitors';
+  info: {
+    singularName: 'kids-branch-visitor';
+    pluralName: 'kids-branch-visitors';
+    displayName: 'KidsBranchVisitor';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    gender: Attribute.Enumeration<['male', 'female']> & Attribute.Required;
+    name: Attribute.String & Attribute.Required;
+    phone_number: Attribute.String & Attribute.Required;
+    email: Attribute.Email;
+    parent_phone_number: Attribute.String;
+    kids_branch_visit: Attribute.Relation<
+      'api::kids-branch-visitor.kids-branch-visitor',
+      'oneToOne',
+      'api::kids-branch-visit.kids-branch-visit'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::kids-branch-visitor.kids-branch-visitor',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::kids-branch-visitor.kids-branch-visitor',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -583,6 +662,53 @@ export interface PluginContentReleasesReleaseAction
   };
 }
 
+export interface PluginI18NLocale extends Schema.CollectionType {
+  collectionName: 'i18n_locale';
+  info: {
+    singularName: 'locale';
+    pluralName: 'locales';
+    collectionName: 'locales';
+    displayName: 'Locale';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    name: Attribute.String &
+      Attribute.SetMinMax<
+        {
+          min: 1;
+          max: 50;
+        },
+        number
+      >;
+    code: Attribute.String & Attribute.Unique;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::i18n.locale',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUsersPermissionsPermission
   extends Schema.CollectionType {
   collectionName: 'up_permissions';
@@ -734,132 +860,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface PluginI18NLocale extends Schema.CollectionType {
-  collectionName: 'i18n_locale';
-  info: {
-    singularName: 'locale';
-    pluralName: 'locales';
-    collectionName: 'locales';
-    displayName: 'Locale';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    name: Attribute.String &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 50;
-        },
-        number
-      >;
-    code: Attribute.String & Attribute.Unique;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'plugin::i18n.locale',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiKidsBranchVisitKidsBranchVisit
-  extends Schema.CollectionType {
-  collectionName: 'kids_branch_visits';
-  info: {
-    singularName: 'kids-branch-visit';
-    pluralName: 'kids-branch-visits';
-    displayName: 'KidsBranchVisit';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    company_name: Attribute.String & Attribute.Required;
-    responsible_person_name: Attribute.String & Attribute.Required;
-    visit_date: Attribute.Date & Attribute.Required;
-    responsible_person_phone_number: Attribute.String & Attribute.Required;
-    business_email: Attribute.Email & Attribute.Required;
-    message: Attribute.Text;
-    current_visit: Attribute.Boolean & Attribute.DefaultTo<false>;
-    company_logo: Attribute.Media;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::kids-branch-visit.kids-branch-visit',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::kids-branch-visit.kids-branch-visit',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiKidsBranchVisitorKidsBranchVisitor
-  extends Schema.CollectionType {
-  collectionName: 'kids_branch_visitors';
-  info: {
-    singularName: 'kids-branch-visitor';
-    pluralName: 'kids-branch-visitors';
-    displayName: 'KidsBranchVisitor';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    gender: Attribute.Enumeration<['male', 'female']> & Attribute.Required;
-    name: Attribute.String & Attribute.Required;
-    phone_number: Attribute.String & Attribute.Required;
-    email: Attribute.Email;
-    parent_phone_number: Attribute.String;
-    kids_branch_visit: Attribute.Relation<
-      'api::kids-branch-visitor.kids-branch-visitor',
-      'oneToOne',
-      'api::kids-branch-visit.kids-branch-visit'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::kids-branch-visitor.kids-branch-visitor',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::kids-branch-visitor.kids-branch-visitor',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -870,16 +870,16 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::kids-branch-visit.kids-branch-visit': ApiKidsBranchVisitKidsBranchVisit;
+      'api::kids-branch-visitor.kids-branch-visitor': ApiKidsBranchVisitorKidsBranchVisitor;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::i18n.locale': PluginI18NLocale;
-      'api::kids-branch-visit.kids-branch-visit': ApiKidsBranchVisitKidsBranchVisit;
-      'api::kids-branch-visitor.kids-branch-visitor': ApiKidsBranchVisitorKidsBranchVisitor;
     }
   }
 }
