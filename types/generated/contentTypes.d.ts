@@ -368,11 +368,16 @@ export interface ApiKidsBranchVisitKidsBranchVisit
   info: {
     singularName: 'kids-branch-visit';
     pluralName: 'kids-branch-visits';
-    displayName: 'KidsBranchVisit';
+    displayName: 'Branch Visits';
     description: '';
   };
   options: {
     draftAndPublish: true;
+  };
+  pluginOptions: {
+    'import-export-entries': {
+      idField: 'company_name';
+    };
   };
   attributes: {
     company_name: Attribute.String & Attribute.Required;
@@ -383,6 +388,8 @@ export interface ApiKidsBranchVisitKidsBranchVisit
     message: Attribute.Text;
     current_visit: Attribute.Boolean & Attribute.DefaultTo<false>;
     company_logo: Attribute.Media;
+    number_of_visitors: Attribute.Integer;
+    visitors_gender: Attribute.Enumeration<['boys', 'girls']>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -407,11 +414,16 @@ export interface ApiKidsBranchVisitorKidsBranchVisitor
   info: {
     singularName: 'kids-branch-visitor';
     pluralName: 'kids-branch-visitors';
-    displayName: 'KidsBranchVisitor';
+    displayName: 'Visitors (Kids)';
     description: '';
   };
   options: {
     draftAndPublish: true;
+  };
+  pluginOptions: {
+    'import-export-entries': {
+      idField: 'name';
+    };
   };
   attributes: {
     gender: Attribute.Enumeration<['male', 'female']> & Attribute.Required;
@@ -427,6 +439,25 @@ export interface ApiKidsBranchVisitorKidsBranchVisitor
     team: Attribute.Enumeration<['red', 'yellow']>;
     picture: Attribute.Media;
     points: Attribute.Integer;
+    grade: Attribute.Enumeration<
+      [
+        'KG1',
+        'KG2',
+        'KG3',
+        'Grade 1',
+        'Grade 2',
+        'Grade 3',
+        'Grade 4',
+        'Grade 5',
+        'Grade 6',
+        'Grade 7',
+        'Grade 8',
+        'Grade 9',
+        'Grade 10',
+        'Grade 11',
+        'Grade 12'
+      ]
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -595,6 +626,12 @@ export interface PluginContentReleasesRelease extends Schema.CollectionType {
   attributes: {
     name: Attribute.String & Attribute.Required;
     releasedAt: Attribute.DateTime;
+    scheduledAt: Attribute.DateTime;
+    timezone: Attribute.String;
+    status: Attribute.Enumeration<
+      ['ready', 'blocked', 'failed', 'done', 'empty']
+    > &
+      Attribute.Required;
     actions: Attribute.Relation<
       'plugin::content-releases.release',
       'oneToMany',
@@ -649,6 +686,7 @@ export interface PluginContentReleasesReleaseAction
       'manyToOne',
       'plugin::content-releases.release'
     >;
+    isEntryValid: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -659,6 +697,48 @@ export interface PluginContentReleasesReleaseAction
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'plugin::content-releases.release-action',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface PluginCustomApiCustomApi extends Schema.CollectionType {
+  collectionName: 'custom_apis';
+  info: {
+    singularName: 'custom-api';
+    pluralName: 'custom-apis';
+    displayName: 'Custom API';
+  };
+  options: {
+    draftAndPublish: false;
+    comment: '';
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: true;
+    };
+    'content-type-builder': {
+      visible: true;
+    };
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    slug: Attribute.UID<'plugin::custom-api.custom-api', 'name'> &
+      Attribute.Required;
+    selectedContentType: Attribute.JSON;
+    structure: Attribute.JSON;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::custom-api.custom-api',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::custom-api.custom-api',
       'oneToOne',
       'admin::user'
     > &
@@ -880,6 +960,7 @@ declare module '@strapi/types' {
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
+      'plugin::custom-api.custom-api': PluginCustomApiCustomApi;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;

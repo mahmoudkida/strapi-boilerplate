@@ -4,13 +4,15 @@
   "info": {
     "singularName": "kids-branch-visit",
     "pluralName": "kids-branch-visits",
-    "displayName": "KidsBranchVisit",
+    "displayName": "Branch Visits",
     "description": ""
   },
   "options": {
     "draftAndPublish": true
   },
-  "pluginOptions": {},
+  "pluginOptions": {"import-export-entries": {
+    "idField": "company_name"
+  }},
   "attributes": {
     "company_name": {
       "type": "string",
@@ -45,6 +47,16 @@
       "required": false,
       "allowedTypes": [
         "images"
+      ]
+    },
+    "number_of_visitors": {
+      "type": "integer"
+    },
+    "visitors_gender": {
+      "type": "enumeration",
+      "enum": [
+        "boys",
+        "girls"
       ]
     }
   }
